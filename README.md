@@ -1,4 +1,4 @@
-# Ethereum Wallet API
+# Blockchain event listener
 
 This is a simple Express.js API server that interacts with the Ethereum blockchain. It allows users to perform basic wallet operations such as checking account balance, sending transactions, and retrieving block numbers.
 
