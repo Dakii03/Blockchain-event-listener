@@ -1,4 +1,4 @@
-const { getBlockNumbers, createSigner, createProvider } = require("./script.js")
+const { getBlockNumbers, createSigner, createProvider } = require("./src/script.js")
 const express = require('express')
 const { ethers } = require("ethers");
 const app = express()
@@ -6,6 +6,7 @@ const port = 3000
 const PRIVATE_KEY_1 = process.env.PRIVATE_KEY_1 || ""
 const PRIVATE_KEY_2 = process.env.PRIVATE_KEY_2 || ""
 const ALCHEMY_API_KEY = process.env.ALCHEMY_API_KEY || ""
+const pass = process.env.PASSWORD || ""
 
 app.use(express.json()); // Parse JSON bodies
 
@@ -74,4 +75,3 @@ app.post("/send", async (req, res) => {
     res.status(500).send({ error: error.message });
   }
 });
-

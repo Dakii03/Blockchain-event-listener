@@ -1,68 +1,39 @@
 # Blockchain event listener
 
-This is a simple Express.js API server that interacts with the Ethereum blockchain. It allows users to perform basic wallet operations such as checking account balance, sending transactions, and retrieving block numbers.
+## Overview
 
-## Setup
+This project is a full-stack application that integrates various components of the Ethereum blockchain ecosystem. It includes functionalities to interact with Ethereum smart contracts, monitor blockchain events, store data in a MongoDB database, and expose APIs through an Express.js server.
 
-1. Clone the repository:
+## Features
 
-```bash
-git clone https://github.com/Dakii03/Blockchain-event-listener.git
-```
+- **Alchemy Integration**: Utilizes Alchemy API for blockchain data retrieval and WebSocket connections.
+- **Ethereum Interactions**: Implements functions to fetch block numbers, create providers, and sign transactions.
+- **MongoDB Integration**: Connects to a MongoDB database to store swap event data.
+- **Express.js Server**: Sets up endpoints for handling HTTP requests and interacting with Ethereum contracts.
 
-2. Navigate into the project directory:
+## Files
 
-```bash
-cd ../Blockchain-event-listener
-```
-
-3. Install dependencies:
-
-```bash
-yarn add
-```
-
-4. Create a `.env` file in the root directory:
-
-```plaintext
-Put here your own Alchemy API key and private keys.
-```
+- **app.js**: Contains the Express.js server endpoints for fetching balances and managing transactions.
+- **contracts.js**: Handles interactions with Ethereum smart contracts and saves swap events to the MongoDB database.
+- **script.js**: Configures Alchemy API settings, creates providers, signers, and fetches block numbers.
+- **mongodb.js**: Establishes a connection to a MongoDB database and defines a schema for swap events.
 
 ## Usage
 
-1. Start the server:
+1. Ensure Node.js, MongoDB, and Ethereum wallets are installed.
+2. Set up a MongoDB database and update the connection string in mongodb.js.
+3. Configure environment variables for the Alchemy API key and private keys.
+4. Run the application using `node app.js` to start the Express server and handle blockchain events or `node contracts.js` for event listener.
 
-```bash
-node app.js
-```
+## Installation
 
-2. Make requests to the API endpoints:
+1. Clone the repository from the main branch.
+2. Install dependencies using `yarn add`.
+3. Create a `.env` file with your Alchemy API key and private keys.
+4. Start the application by running `node app.js or contracts.js`.
 
-- `GET /blocks`: Get the latest block numbers.
-- `POST /wallet`: Create a new wallet using the provided private key.
-- `GET /balance`: Get the balance of the wallet associated with `PRIVATE_KEY_1`.
-- `POST /send`: Send Ethereum from the wallet associated with `PRIVATE_KEY_1` to the specified address.
+## Resources
 
-## API Endpoints
-
-### GET /blocks
-
-Returns the latest block numbers from the Ethereum blockchain.
-
-### POST /wallet
-
-Creates a new wallet using the provided private key (`PRIVATE_KEY_1`). Returns the wallet address and private key.
-
-### GET /balance
-
-Gets the balance of the wallet associated with `PRIVATE_KEY_1`.
-
-### POST /send
-
-Sends Ethereum from the wallet associated with `PRIVATE_KEY_1` to the specified address. Requires a JSON payload with `to` (recipient address) and `amount` fields.
-
-## Dependencies
-
-- `express`: Web framework for Node.js.
-- `ethers`: Ethereum library for interacting with the Ethereum blockchain.
-- `alchemy-sdk`: SDK for interacting with the Alchemy API.
+- Alchemy API Documentation: [Link to Alchemy Docs](https://docs.alchemy.com/)
+- Ethereum Developer Resources: [Link to Ethereum Developer Portal](https://ethereum.org/developers/)
+- MongoDB Documentation: [Link to MongoDB Docs](https://docs.mongodb.com/)
