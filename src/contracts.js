@@ -15,7 +15,6 @@ async function getSwap() {
     connect();
     let firstObject = true;
 
-    // Read the content of the JSON file
     fs.readFile(filePath, 'utf8', (err, data) => {
         if (err) {
             console.error('Error reading file:', err);
