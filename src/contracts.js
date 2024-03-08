@@ -5,7 +5,7 @@ const { SwapEvent, connect } = require('./mongodb.js');
 const { createWebSocketProvider } = require("./script.js");
 require("dotenv").config();
 const ALCHEMY_API_KEY = process.env.ALCHEMY_API_KEY || "";
-const filePath = '../swapEventDB.json';
+const filePath = './swapEventDB.json';
 
 async function getSwap() {
     const usdcAddress = "0x0d4a11d5EEaaC28EC3F61d100daF4d40471f1852"; // USDC Contract
@@ -82,4 +82,4 @@ async function getSwap() {
     console.log("Initialized event listener");
 }
 
-getSwap();
+module.exports = getSwap;
