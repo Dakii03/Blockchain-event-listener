@@ -24,7 +24,6 @@ async function createWebSocketProvider(apiKey) {
   } catch(err) {
     console.log(err)
   }
-
 }
 
 async function getBlockNumbers() {
