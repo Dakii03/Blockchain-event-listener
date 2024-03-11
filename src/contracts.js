@@ -1,15 +1,14 @@
+require("dotenv").config();
 const ethers = require("ethers");
-const ABI = require("../abi/abi.json");
 const fs = require('fs');
 const { SwapEvent, connect } = require('./mongodb.js');
-const { createWebSocketProvider } = require("./script.js");
-require("dotenv").config();
-const ALCHEMY_API_KEY = process.env.ALCHEMY_API_KEY || "";
+const { createWebSocketProvider, settings, alchemy } = require("./script.js");
+const ABI = require("../abi/abi.json");
 const filePath = './swapEventDB.json';
 
 async function getSwap() {
     const usdcAddress = "0x0d4a11d5EEaaC28EC3F61d100daF4d40471f1852"; // USDC Contract
-    const provider = await createWebSocketProvider(ALCHEMY_API_KEY);
+    const provider = await createWebSocketProvider(settings.apiMainnetKey);
     const contract = await new ethers.Contract(usdcAddress, ABI, provider);
 
     connect();

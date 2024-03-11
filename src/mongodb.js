@@ -1,7 +1,8 @@
 const mongoose = require('mongoose');
+const pass = process.env.PASSWORD || "";
 
 async function connect() {
-    await mongoose.connect('mongodb+srv://Damjan:123@testcluster1.l2wbbey.mongodb.net/?retryWrites=true&w=majority&appName=TestCluster1');
+    await mongoose.connect(`mongodb+srv://Damjan:${pass}@testcluster1.l2wbbey.mongodb.net/?retryWrites=true&w=majority&appName=TestCluster1`);
     console.log('Connected to the MongoDB successfully');
 }
 

@@ -1,14 +1,21 @@
 const { getBlockNumbers, createSigner, createProvider } = require("./script.js");
-const express = require('express');
+const { settings, alchemy } = require('./script.js');
 const { ethers } = require("ethers");
-const app = express();
+const cors = require('cors');
+const express = require('express');
 
 const PRIVATE_KEY_1 = process.env.PRIVATE_KEY_1 || "";
 const PRIVATE_KEY_2 = process.env.PRIVATE_KEY_2 || "";
-const ALCHEMY_API_KEY = process.env.ALCHEMY_API_KEY || "";
-const pass = process.env.PASSWORD || "";
 
+const app = express();
 app.use(express.json()); // Parse JSON bodies
+
+const corsOptions = {
+  origin: 'http://localhost:5173', 
+  methods: 'GET,POST', 
+};
+
+app.use(cors(corsOptions));;
 
 app.get('/blocks', async (req, res) => {
   const result = await getBlockNumbers();
@@ -17,7 +24,7 @@ app.get('/blocks', async (req, res) => {
 
 app.post('/wallet', async (req, res) => {
   try {
-    const provider = await createProvider(ALCHEMY_API_KEY);
+    const provider = await createProvider(settings.apiKey);
     const wallet = await createSigner(PRIVATE_KEY_1, provider);
 
     console.log("Wallet Address: ", wallet.address);
@@ -31,7 +38,7 @@ app.post('/wallet', async (req, res) => {
 
 app.get('/balance', async (req, res) => {
   try {
-    const provider = await createProvider(ALCHEMY_API_KEY);
+    const provider = await createProvider(settings.apiKey);
     const wallet = await createSigner(PRIVATE_KEY_1, provider);
 
     const balance = await provider.getBalance(wallet.address);
@@ -40,7 +47,7 @@ app.get('/balance', async (req, res) => {
     const newBalance = ethers.formatEther(balance);
     console.log(newBalance);
 
-    res.send({ balance: newBalance + " ETH_Sepolia" });
+    res.send({ balance: newBalance + ` ${settings.network.toUpperCase()}` });
   } catch (error) {
     res.status(500).send({ error: error.message });
   }
@@ -50,12 +57,10 @@ app.post("/send", async (req, res) => {
   try {
     const { to, amount } = req.body;
     if (!to || !amount) {
-      return res
-        .status(400)
-        .send({ error: "Missing 'to' or 'amount' in request body" });
+      return res.status(400).send({ error: "Missing 'to' or 'amount' in request body" });
     }
 
-    const senderProvider = await createProvider(ALCHEMY_API_KEY);
+    const senderProvider = await createProvider(settings.apiKey);
     const senderWallet = await createSigner(PRIVATE_KEY_1, senderProvider);
 
     const tx = {

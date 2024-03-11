@@ -1,17 +1,20 @@
+require("dotenv").config();
 const { Network, Alchemy } = require("alchemy-sdk");
 const { ethers } = require("ethers");
-require("dotenv").config();
 
-const ALCHEMY_API_KEY = process.env.ALCHEMY_API_KEY || ""
+const ALCHEMY_API_KEY = process.env.ALCHEMY_API_KEY || "";
+const ALCHEMY_MAINNET_API_KEY =  process.env.ALCHEMY_MAINNET_API_KEY || "";
 
 const settings = {
   apiKey: ALCHEMY_API_KEY, 
+  apiMainnetKey: ALCHEMY_MAINNET_API_KEY,
   network: Network.ETH_SEPOLIA, 
+  networkMainnet: Network.ETH_MAINNET,
 };
 const alchemy = new Alchemy(settings);
 
 async function createProvider(apiKey) {
-  const providerUrl = `https://eth-sepolia.g.alchemy.com/v2/${apiKey}`
+  const providerUrl = `https://${settings.network}.g.alchemy.com/v2/${apiKey}`
   const provider = new ethers.JsonRpcProvider(providerUrl)
 
   return provider;
@@ -19,7 +22,7 @@ async function createProvider(apiKey) {
 
 async function createWebSocketProvider(apiKey) {
   try {
-    const provider = new ethers.WebSocketProvider(`wss://eth-mainnet.g.alchemy.com/v2/EC7xiPhxlKzp6f-3lbl_HLc4LUzu_rs6`);
+    const provider = new ethers.WebSocketProvider(`wss://${settings.networkMainnet}.g.alchemy.com/v2/${apiKey}`);
     return provider;
   } catch(err) {
     console.log(err)
@@ -41,4 +44,4 @@ async function createSigner(privateKey, provider) {
   return wallet;
 }
 
-module.exports = { getBlockNumbers, createSigner, createProvider, createWebSocketProvider }
+module.exports = { getBlockNumbers, createSigner, createProvider, createWebSocketProvider, settings, alchemy };
