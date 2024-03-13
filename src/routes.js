@@ -2,11 +2,13 @@ const { getBlockNumbers, createSigner, createProvider } = require("./script.js")
 const { settings, alchemy } = require('./script.js');
 const { ethers } = require("ethers");
 const express = require('express');
+const cors = require('cors');
 
 const PRIVATE_KEY_1 = process.env.PRIVATE_KEY_1 || "";
 const PRIVATE_KEY_2 = process.env.PRIVATE_KEY_2 || "";
 
 const app = express();
+app.use(cors());
 app.use(express.json()); // Parse JSON bodies
 
 app.get('/blocks', async (req, res) => {

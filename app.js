@@ -1,9 +1,9 @@
+const cors = require('cors');
 const app = require('./src/routes.js');
 const PORT = process.env.PORT || 3000;
 const getSwap = require('./src/contracts.js');
-const cors = require('cors');
 
-app.use(cors()); 
+app.use(cors())
 
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);
