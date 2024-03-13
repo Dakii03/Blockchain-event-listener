@@ -1,15 +1,18 @@
-// Send.jsx
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import axios from 'axios';
 
-const Send = () => {
+function Send() {
   const [transactionHash, setTransactionHash] = useState('');
-  const [to, setTo] = useState('');
-  const [amount, setAmount] = useState('');
+  const [formData, setFormData] = useState({ to: '', amount: '' });
 
-  const handleSend = async () => {
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
     try {
-      const response = await axios.post('/send', { to, amount });
+      const response = await axios.post('http://localhost:3000/send', formData);
       setTransactionHash(response.data.transactionHash);
     } catch (error) {
       console.error('Error sending transaction:', error);
@@ -18,19 +21,21 @@ const Send = () => {
 
   return (
     <div>
-      <h2>Send Component</h2>
-      <div>
-        <label htmlFor="to">To:</label>
-        <input type="text" id="to" value={to} onChange={(e) => setTo(e.target.value)} />
-      </div>
-      <div>
-        <label htmlFor="amount">Amount:</label>
-        <input type="text" id="amount" value={amount} onChange={(e) => setAmount(e.target.value)} />
-      </div>
-      <button onClick={handleSend}>Send Transaction</button>
+      <h2>Send</h2>
+      <form onSubmit={handleSubmit}>
+        <div>
+          <label htmlFor="to">To: </label>
+          <input type="text" id="to" name="to" value={formData.to} onChange={handleChange} />
+        </div>
+        <div>
+          <label htmlFor="amount">Amount: </label>
+          <input type="text" id="amount" name="amount" value={formData.amount} onChange={handleChange} />
+        </div>
+        <button type="submit">Send</button>
+      </form>
       {transactionHash && <p>Transaction Hash: {transactionHash}</p>}
     </div>
   );
-};
+}
 
 export default Send;

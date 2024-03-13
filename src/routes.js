@@ -1,7 +1,6 @@
 const { getBlockNumbers, createSigner, createProvider } = require("./script.js");
 const { settings, alchemy } = require('./script.js');
 const { ethers } = require("ethers");
-const cors = require('cors');
 const express = require('express');
 
 const PRIVATE_KEY_1 = process.env.PRIVATE_KEY_1 || "";
@@ -9,13 +8,6 @@ const PRIVATE_KEY_2 = process.env.PRIVATE_KEY_2 || "";
 
 const app = express();
 app.use(express.json()); // Parse JSON bodies
-
-const corsOptions = {
-  origin: 'http://localhost:5173', 
-  methods: 'GET,POST', 
-};
-
-app.use(cors(corsOptions));;
 
 app.get('/blocks', async (req, res) => {
   const result = await getBlockNumbers();

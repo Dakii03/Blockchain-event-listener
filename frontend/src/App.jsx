@@ -4,7 +4,6 @@ import reactLogo from './assets/react.svg';
 import viteLogo from '/vite.svg';
 import './App.css';
 
-// Importing components for each route
 import Blocks from './Blocks';
 import Balance from './Balance';
 import Send from './Send';

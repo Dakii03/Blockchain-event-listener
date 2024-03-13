@@ -1,31 +1,28 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
-const Balance = () => {
+function Balance() {
   const [balance, setBalance] = useState('');
 
   useEffect(() => {
-    // Fetch balance data when component mounts
+    async function fetchBalance() {
+      try {
+        const response = await axios.get('http://localhost:3000/balance'); 
+        setBalance(response.data.balance);
+      } catch (error) {
+        console.error('Error fetching balance:', error);
+      }
+    }
+
     fetchBalance();
   }, []);
 
-  const fetchBalance = async () => {
-    try {
-      const response = await axios.get('/balance');
-      setBalance(response.data.balance);
-      
-    } catch (error) {
-      console.error('Error fetching balance:', error);
-    }
-  };
-
   return (
     <div>
-      <h2>Balance Component</h2>
-      <button onClick={fetchBalance}>Fetch Balance</button>
-      <p>Balance: {balance}</p>
+      <h2>Balance</h2>
+      <p>{balance}</p>
     </div>
   );
-};
+}
 
 export default Balance;
